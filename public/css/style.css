@@ -305,3 +305,170 @@ h2, .h2 {
   background-color: #727e86;
   border-color: #727e86;
 }
+
+/* Responsive Styles */
+@media (max-width: 991.98px) {
+  .header-controls-pics {
+    max-width: 100%;
+    margin-left: 0;
+    margin-top: 10px;
+    justify-content: flex-end;
+  }
+  
+  .header-controls-search-form {
+    right: 0;
+    top: 100%;
+    width: 100%;
+    margin-top: 10px;
+    position: relative;
+  }
+  
+  .navbar-nav {
+    margin-bottom: 15px;
+  }
+  
+  .banner-header {
+    width: 100%;
+    font-size: 32px;
+    line-height: 60px;
+    height: 60px;
+    top: 20px;
+  }
+  
+  .footer {
+    padding: 20px 15px;
+  }
+  
+  .footer-contacts {
+    text-align: left !important;
+    margin-top: 20px;
+  }
+  
+  .footer-pay {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+  
+  .footer-pay-systems {
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .banner-header {
+    font-size: 24px;
+    line-height: 50px;
+    height: 50px;
+    top: 15px;
+  }
+  
+  .header-controls-pics {
+    margin-top: 15px;
+  }
+  
+  .header-controls-pic {
+    margin: 0 5px;
+  }
+  
+  .footer-pay {
+    justify-content: center;
+  }
+  
+  .footer-copyright {
+    text-align: center;
+    margin-top: 15px;
+  }
+  
+  section {
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+  }
+  
+  h2, .h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1em;
+    margin-top: 1.5em;
+  }
+  
+  h5 {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .banner-header {
+    font-size: 18px;
+    line-height: 36px;
+    height: 36px;
+    top: 10px;
+    padding: 0 10px;
+  }
+  
+  .header-controls-pics {
+    max-width: 150px;
+  }
+  
+  .header-controls-pic {
+    height: 28px;
+    width: 28px;
+    margin: 0 3px;
+  }
+  
+  .navbar-brand img {
+    max-height: 40px;
+  }
+  
+  .footer-pay-systems {
+    width: 40px;
+    height: 24px;
+  }
+  
+  .container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  
+  .navbar-nav .nav-link {
+    padding: 0.5rem 1rem;
+  }
+  
+  .catalog-search-form {
+    padding: 0 15px;
+  }
+  
+  .footer-pay {
+    max-width: 100%;
+  }
+}
+
+/* Дополнительные улучшения для адаптивности */
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    margin-top: 15px;
+  }
+  
+  .header-controls-search-form.invisible {
+    display: none;
+  }
+  
+  .header-controls-search-form:not(.invisible) {
+    display: block;
+  }
+}
+
+/* Улучшение для очень маленьких экранов */
+@media (max-width: 400px) {
+  .banner-header {
+    font-size: 16px;
+    line-height: 32px;
+    height: 32px;
+  }
+  
+  .navbar-brand {
+    font-size: 0.9rem;
+  }
+  
+  .footer-copyright {
+    font-size: 0.75em;
+  }
+}

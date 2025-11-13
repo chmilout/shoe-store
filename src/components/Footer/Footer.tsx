@@ -5,7 +5,7 @@ function Footer() {
   return (
     <footer className="container bg-light footer">
       <div className="row">
-        <div className="col">
+        <div className="col-12 col-md-4 mb-3 mb-md-0">
           <section>
             <h5>Информация</h5>
             <ul className="nav flex-column">
@@ -27,7 +27,7 @@ function Footer() {
             </ul>
           </section>
         </div>
-        <div className="col">
+        <div className="col-12 col-md-4 mb-3 mb-md-0">
           <section>
             <h5>Принимаем к оплате:</h5>
             <div className="footer-pay">
@@ -41,12 +41,14 @@ function Footer() {
           </section>
           <section>
             <div className="footer-copyright">
-              2009-2025 © BosaNoga.ru — модный интернет-магазин обуви и аксессуаров.
-              Все права защищены.<br />Доставка по всей России!
+              2009-2025 © BosaNoga.ru — модный интернет-магазин обуви и
+              аксессуаров. Все права защищены.
+              <br />
+              Доставка по всей России!
             </div>
           </section>
         </div>
-        <div className="col text-right">
+        <div className="col-12 col-md-4 text-md-right">
           <section className="footer-contacts">
             <h5>Контакты:</h5>
             <a className="footer-contacts-phone" href="tel:+7-495-790-35-03">
@@ -55,7 +57,10 @@ function Footer() {
             <span className="footer-contacts-working-hours">
               Ежедневно: с 09-00 до 21-00
             </span>
-            <a className="footer-contacts-email" href="mailto:office@bosanoga.ru">
+            <a
+              className="footer-contacts-email"
+              href="mailto:office@bosanoga.ru"
+            >
               office@bosanoga.ru
             </a>
             <div className="footer-social-links">
@@ -70,4 +75,3 @@ function Footer() {
 }
 
 export default Footer;
-

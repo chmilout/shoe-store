@@ -3,3 +3,8 @@
   cursor: pointer;
 }
 
+/* Для мобильного меню без Bootstrap JS */
+.navbar-collapse.show {
+  display: block !important;
+}
+
