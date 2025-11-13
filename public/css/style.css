@@ -177,6 +177,11 @@ section {
   margin-bottom: 2em;
 }
 
+.catalog-categories .nav-link.active {
+  color: #ff0000;
+  font-weight: bold;
+}
+
 .catalog-item-card {
   margin-bottom: 1em;
 }
