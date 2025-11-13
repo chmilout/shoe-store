@@ -36,7 +36,7 @@ function Categories({ selectedCategoryId, onCategoryChange }: CategoriesProps) {
   };
 
   return (
-    <ul className="catalog-categories nav justify-content-center">
+    <ul className="catalog-categories nav justify-content-center flex-wrap">
       <li className="nav-item">
         <a
           className={`nav-link ${selectedCategoryId === null ? 'active' : ''}`}

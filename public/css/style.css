@@ -461,6 +461,116 @@ h2, .h2 {
   }
 }
 
+/* Адаптивность для главной страницы */
+@media (max-width: 991.98px) {
+  .top-sales .row,
+  .catalog .row {
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+  
+  .top-sales .col-12,
+  .catalog .col-12 {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
+  .catalog-categories {
+    font-size: 1.1rem;
+    flex-wrap: wrap;
+  }
+  
+  .catalog-categories .nav-item {
+    margin-bottom: 5px;
+  }
+  
+  .catalog-categories .nav-link {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .top-sales,
+  .catalog {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  
+  .catalog-categories {
+    font-size: 1rem;
+    margin-bottom: 1.5em;
+  }
+  
+  .catalog-categories .nav-link {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.9rem;
+  }
+  
+  .catalog-item-card .card {
+    margin-bottom: 1rem;
+  }
+  
+  .catalog-item-card .card-body {
+    padding: 1rem;
+  }
+  
+  .catalog-item-card .card-text {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .catalog-item-card .btn {
+    width: 100%;
+    font-size: 0.9rem;
+  }
+  
+  .top-sales h2,
+  .catalog h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .catalog-categories {
+    font-size: 0.9rem;
+  }
+  
+  .catalog-categories .nav-link {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.85rem;
+  }
+  
+  .catalog-item-card .card-img-top {
+    max-height: 200px;
+    object-fit: cover;
+  }
+  
+  .catalog-item-card .card-body {
+    padding: 0.75rem;
+  }
+  
+  .catalog-item-card .card-text {
+    font-size: 0.85rem;
+  }
+  
+  .catalog-item-card .btn {
+    padding: 0.5rem;
+    font-size: 0.85rem;
+  }
+  
+  .top-sales h2,
+  .catalog h2 {
+    font-size: 1.25rem;
+  }
+  
+  .btn-outline-primary {
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+  }
+}
+
 /* Улучшение для очень маленьких экранов */
 @media (max-width: 400px) {
   .banner-header {
@@ -475,5 +585,23 @@ h2, .h2 {
   
   .footer-copyright {
     font-size: 0.75em;
+  }
+  
+  .catalog-categories {
+    font-size: 0.8rem;
+  }
+  
+  .catalog-categories .nav-link {
+    padding: 0.3rem 0.4rem;
+    font-size: 0.8rem;
+  }
+  
+  .catalog-item-card .card-img-top {
+    max-height: 180px;
+  }
+  
+  .top-sales h2,
+  .catalog h2 {
+    font-size: 1.1rem;
   }
 }

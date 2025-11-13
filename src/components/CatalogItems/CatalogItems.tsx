@@ -85,8 +85,11 @@ function CatalogItems({ categoryId }: CatalogItemsProps) {
       <h2 className="text-center">Каталог</h2>
       <div className="row">
         {items.map((item) => (
-          <div key={item.id} className="col-4 catalog-item-card">
-            <div className="card">
+          <div
+            key={item.id}
+            className="col-12 col-md-6 col-lg-4 catalog-item-card mb-4"
+          >
+            <div className="card h-100">
               <img
                 src={item.images[0] || '/img/products/placeholder.jpg'}
                 className="card-img-top img-fluid"
