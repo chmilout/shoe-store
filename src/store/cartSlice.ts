@@ -12,9 +12,9 @@ import {
 export interface CartItem {
   id: number;
   title: string;
-  price: number; // Цена фиксируется при добавлении
+  price: number;
   size: string;
-  count: number; // Количество
+  count: number;
   image: string;
 }
 
@@ -27,7 +27,6 @@ interface CartState {
 
 const CART_STORAGE_KEY = 'cart';
 
-// Загрузка корзины из localStorage
 const loadCartFromStorage = (): CartItem[] => {
   try {
     const stored = localStorage.getItem(CART_STORAGE_KEY);
@@ -37,7 +36,6 @@ const loadCartFromStorage = (): CartItem[] => {
   }
 };
 
-// Сохранение корзины в localStorage
 const saveCartToStorage = (items: CartItem[]) => {
   try {
     localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
@@ -53,7 +51,6 @@ const initialState: CartState = {
   orderSuccess: false,
 };
 
-// Thunk для оформления заказа
 export const submitOrderThunk = createAsyncThunk<
   OrderResponse,
   OrderRequest,
@@ -73,23 +70,19 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    // Добавление товара в корзину
     addToCart: (
       state,
       action: PayloadAction<Omit<CartItem, 'count'> & { count?: number }>
     ) => {
       const { id, size, count = 1, ...rest } = action.payload;
 
-      // Ищем существующую позицию (товар + размер)
       const existingItemIndex = state.items.findIndex(
         (item) => item.id === id && item.size === size
       );
 
       if (existingItemIndex >= 0) {
-        // Если позиция существует, увеличиваем количество
         state.items[existingItemIndex].count += count;
       } else {
-        // Если позиции нет, добавляем новую
         state.items.push({
           ...rest,
           id,
@@ -101,7 +94,6 @@ const cartSlice = createSlice({
       saveCartToStorage(state.items);
     },
 
-    // Удаление товара из корзины
     removeFromCart: (
       state,
       action: PayloadAction<{ id: number; size: string }>
@@ -113,7 +105,6 @@ const cartSlice = createSlice({
       saveCartToStorage(state.items);
     },
 
-    // Изменение количества товара
     updateItemCount: (
       state,
       action: PayloadAction<{ id: number; size: string; count: number }>
@@ -124,7 +115,6 @@ const cartSlice = createSlice({
       );
       if (item) {
         if (count <= 0) {
-          // Если количество <= 0, удаляем позицию
           state.items = state.items.filter(
             (item) => !(item.id === id && item.size === size)
           );
@@ -135,13 +125,11 @@ const cartSlice = createSlice({
       }
     },
 
-    // Очистка корзины
     clearCart: (state) => {
       state.items = [];
       saveCartToStorage(state.items);
     },
 
-    // Сброс состояния заказа
     resetOrderStatus: (state) => {
       state.orderSuccess = false;
       state.error = null;
@@ -176,7 +164,6 @@ export const {
   resetOrderStatus,
 } = cartSlice.actions;
 
-// Селекторы
 export const selectCartItems = (state: { cart: CartState }) => state.cart.items;
 export const selectCartItemsCount = (state: { cart: CartState }) =>
   state.cart.items.length;

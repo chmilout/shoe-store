@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 import { fetchItems, type CatalogItem } from '../../utils/api';
 import Loader from '../Loader/Loader';
-import './CatalogItems.css';
 
 interface CatalogItemsProps {
   categoryId: number | null;

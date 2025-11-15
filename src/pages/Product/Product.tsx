@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { fetchItem, type ProductItem } from '../../utils/api';
 import { addToCart } from '../../store/cartSlice';
 import Loader from '../../components/Loader/Loader';
-import './Product.css';
 
 function Product() {
   const { id } = useParams<{ id: string }>();
@@ -55,7 +54,6 @@ function Product() {
   const handleAddToCart = () => {
     if (!product || !selectedSize) return;
 
-    // Добавляем товар в корзину с указанным количеством
     dispatch(
       addToCart({
         id: product.id,
@@ -67,7 +65,6 @@ function Product() {
       })
     );
 
-    // Переходим на страницу корзины
     navigate('/cart');
   };
 

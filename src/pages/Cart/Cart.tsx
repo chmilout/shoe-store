@@ -32,12 +32,11 @@ function Cart() {
     agreement?: string;
   }>({});
 
-  // Сброс статуса заказа при размонтировании или изменении
   useEffect(() => {
     if (orderSuccess) {
       const timer = setTimeout(() => {
         dispatch(resetOrderStatus());
-      }, 5000); // Скрываем сообщение через 5 секунд
+      }, 5000);
       return () => clearTimeout(timer);
     }
   }, [orderSuccess, dispatch]);
@@ -138,7 +137,6 @@ function Cart() {
               <p className="text-center">Корзина пуста</p>
             ) : (
               <>
-                {/* Десктопная версия - таблица */}
                 <table className="table table-bordered">
                   <thead>
                     <tr>
@@ -209,7 +207,6 @@ function Cart() {
                   </tbody>
                 </table>
 
-                {/* Мобильная версия - карточки */}
                 <div className="cart-items-mobile">
                   {cartItems.map((item, index) => (
                     <div key={`${item.id}-${item.size}`} className="cart-item-card">

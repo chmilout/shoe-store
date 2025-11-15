@@ -14,12 +14,10 @@ function Header() {
 
   const handleSearchClick = () => {
     if (isSearchOpen && searchQuery.trim()) {
-      // Если поиск открыт и есть текст, перенаправляем на каталог
       navigate(`/catalog?q=${encodeURIComponent(searchQuery)}`);
       setIsSearchOpen(false);
       setSearchQuery('');
     } else {
-      // Иначе просто открываем/закрываем поиск
       setIsSearchOpen(!isSearchOpen);
     }
   };

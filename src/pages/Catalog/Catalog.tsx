@@ -10,25 +10,19 @@ function Catalog() {
     null
   );
 
-  // Получаем поисковый запрос из URL
   const searchQueryFromUrl = searchParams.get('q') || '';
 
-  // Локальное состояние для поля ввода (не live-поиск)
   const [searchQuery, setSearchQuery] = useState(searchQueryFromUrl);
 
-  // Синхронизируем локальное состояние с URL при изменении параметров извне
   useEffect(() => {
     setSearchQuery(searchQueryFromUrl);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams.toString()]);
 
   const handleSearchChange = (query: string) => {
-    // Только обновляем локальное состояние, не обновляем URL
     setSearchQuery(query);
   };
 
   const handleSearchSubmit = (query: string) => {
-    // Обновляем URL с параметром поиска только при отправке формы
     const newParams = new URLSearchParams(searchParams);
     if (query.trim()) {
       newParams.set('q', query.trim());
@@ -36,14 +30,11 @@ function Catalog() {
       newParams.delete('q');
     }
     setSearchParams(newParams);
-    // Синхронизируем локальное состояние с URL после обновления
     setSearchQuery(query.trim());
   };
 
   const handleCategoryChange = (categoryId: number | null) => {
     setSelectedCategoryId(categoryId);
-    // При смене категории данные перезагружаются с учетом строки поиска
-    // Это происходит автоматически через useEffect в CatalogItems
   };
 
   return (

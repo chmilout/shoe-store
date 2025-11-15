@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { fetchCategories, type Category } from '../../utils/api';
-import './Categories.css';
 
 interface CategoriesProps {
   selectedCategoryId: number | null;

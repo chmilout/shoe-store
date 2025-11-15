@@ -1,5 +1,3 @@
-import './CatalogSearch.css';
-
 interface CatalogSearchProps {
   searchQuery: string;
   onSearchChange: (query: string) => void;

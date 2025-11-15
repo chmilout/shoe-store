@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 import { fetchTopSales, type TopSaleItem } from '../../utils/api';
 import Loader from '../Loader/Loader';
-import './TopSales.css';
 
 function TopSales() {
   const [items, setItems] = useState<TopSaleItem[]>([]);
@@ -44,7 +43,6 @@ function TopSales() {
     );
   }
 
-  // Если нет хитов продаж, не отображаем компонент
   if (items.length === 0) {
     return null;
   }

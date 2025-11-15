@@ -1,5 +1,3 @@
-/* Cart page styles */
-
 .cart {
   margin-top: 2em;
   margin-bottom: 2em;
@@ -10,13 +8,11 @@
   margin-bottom: 2em;
 }
 
-/* Адаптивность для таблицы корзины */
 @media (max-width: 767.98px) {
   .cart table {
     display: none;
   }
 
-  /* Карточки товаров для мобильных устройств */
   .cart-items-mobile {
     display: block;
   }
@@ -131,14 +127,12 @@
   }
 }
 
-/* Скрываем мобильные карточки на десктопе */
 @media (min-width: 768px) {
   .cart-items-mobile {
     display: none;
   }
 }
 
-/* Адаптивность для формы заказа */
 @media (max-width: 767.98px) {
   .order .card {
     max-width: 100% !important;
@@ -168,7 +162,6 @@
   }
 }
 
-/* Улучшения для кнопок управления количеством */
 @media (max-width: 575.98px) {
   .btn-group-sm .btn {
     padding: 0.25rem 0.5rem;
@@ -204,7 +197,6 @@
   }
 }
 
-/* Адаптивность для алертов */
 @media (max-width: 575.98px) {
   .alert {
     padding: 0.75rem;
@@ -217,7 +209,6 @@
   }
 }
 
-/* Дополнительные улучшения для очень маленьких экранов */
 @media (max-width: 400px) {
   .cart-item-card {
     padding: 0.5rem;

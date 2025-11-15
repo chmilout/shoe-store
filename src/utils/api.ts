@@ -136,24 +136,20 @@ export async function submitOrder(
         errorMessage = errorText;
       }
     } catch {
-      // Игнорируем ошибку чтения текста ошибки
+      void 0;
     }
     throw new Error(errorMessage);
   }
 
-  // Сервер возвращает 204 (No Content) при успешном заказе
-  // Проверяем статус и наличие контента перед парсингом JSON
   if (response.status === 204) {
     return { success: true };
   }
 
-  // Проверяем Content-Type
   const contentType = response.headers.get('content-type');
   if (!contentType?.includes('application/json')) {
     return { success: true };
   }
 
-  // Если есть JSON контент, парсим его
   try {
     const text = await response.text();
     if (!text || text.trim() === '') {
@@ -161,7 +157,6 @@ export async function submitOrder(
     }
     return JSON.parse(text);
   } catch {
-    // Если парсинг не удался, считаем заказ успешным (204 или пустой ответ)
     return { success: true };
   }
 }
