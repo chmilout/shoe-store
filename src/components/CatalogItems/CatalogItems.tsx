@@ -84,7 +84,7 @@ function CatalogItems({ categoryId, searchQuery }: CatalogItemsProps) {
               key={item.id}
               className="col-12 col-md-6 col-lg-4 catalog-item-card mb-4"
             >
-              <div className="card h-100">
+              <div className="card">
                 <img
                   src={item.images[0] || '/img/products/placeholder.jpg'}
                   className="card-img-top img-fluid"

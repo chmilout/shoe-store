@@ -95,3 +95,73 @@ export async function fetchItem(id: number): Promise<ProductItem> {
   }
   return response.json();
 }
+
+export interface OrderItem {
+  id: number;
+  price: number;
+  count: number;
+}
+
+export interface OrderOwner {
+  phone: string;
+  address: string;
+}
+
+export interface OrderRequest {
+  owner: OrderOwner;
+  items: OrderItem[];
+}
+
+export interface OrderResponse {
+  success: boolean;
+  id?: number;
+}
+
+export async function submitOrder(
+  orderData: OrderRequest
+): Promise<OrderResponse> {
+  const response = await fetch(`${API_URL}/api/order`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(orderData),
+  });
+
+  if (!response.ok) {
+    let errorMessage = 'Ошибка оформления заказа';
+    try {
+      const errorText = await response.text();
+      if (errorText) {
+        errorMessage = errorText;
+      }
+    } catch {
+      // Игнорируем ошибку чтения текста ошибки
+    }
+    throw new Error(errorMessage);
+  }
+
+  // Сервер возвращает 204 (No Content) при успешном заказе
+  // Проверяем статус и наличие контента перед парсингом JSON
+  if (response.status === 204) {
+    return { success: true };
+  }
+
+  // Проверяем Content-Type
+  const contentType = response.headers.get('content-type');
+  if (!contentType?.includes('application/json')) {
+    return { success: true };
+  }
+
+  // Если есть JSON контент, парсим его
+  try {
+    const text = await response.text();
+    if (!text || text.trim() === '') {
+      return { success: true };
+    }
+    return JSON.parse(text);
+  } catch {
+    // Если парсинг не удался, считаем заказ успешным (204 или пустой ответ)
+    return { success: true };
+  }
+}
