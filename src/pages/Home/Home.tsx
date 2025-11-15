@@ -1,8 +1,9 @@
-import TopSales from '../../components/TopSales/TopSales';
-import Categories from '../../components/Categories/Categories';
-import CatalogItems from '../../components/CatalogItems/CatalogItems';
+import { type FC } from 'react';
+import { TopSales } from '../../components/TopSales';
+import { Categories } from '../../components/Categories';
+import { CatalogItems } from '../../components/CatalogItems';
 
-function Home() {
+export const Home: FC = () => {
   return (
     <main className="container">
       <div className="row">
@@ -24,6 +25,4 @@ function Home() {
       </div>
     </main>
   );
-}
-
-export default Home;
+};

@@ -158,4 +158,4 @@ export const selectSearchQuery = (state: { catalog: CatalogState }) =>
 export const selectHasMore = (state: { catalog: CatalogState }) =>
   state.catalog.hasMore;
 
-export default catalogSlice.reducer;
+export const catalogReducer = catalogSlice.reducer;

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { type FC, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router';
 import type { AppDispatch } from '../../store';
@@ -13,10 +13,10 @@ import {
   submitOrderThunk,
   resetOrderStatus,
 } from '../../store/cartSlice';
-import Loader from '../../components/Loader/Loader';
+import { Loader } from '../../components/Loader';
 import './Cart.css';
 
-function Cart() {
+export const Cart: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const cartItems = useSelector(selectCartItems);
   const cartTotal = useSelector(selectCartTotal);
@@ -374,5 +374,3 @@ function Cart() {
     </main>
   );
 }
-
-export default Cart;

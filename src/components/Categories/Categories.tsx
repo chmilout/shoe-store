@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { type FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch } from '../../store';
 import {
@@ -13,7 +13,7 @@ interface CategoriesProps {
   onCategoryChange?: (categoryId: number | null) => void;
 }
 
-function Categories({ onCategoryChange }: CategoriesProps) {
+export const Categories: FC<CategoriesProps> = ({ onCategoryChange }) => {
   const dispatch = useDispatch<AppDispatch>();
   const categories = useSelector(selectCategories);
   const loading = useSelector(selectCategoriesLoading);
@@ -66,6 +66,4 @@ function Categories({ onCategoryChange }: CategoriesProps) {
       ))}
     </ul>
   );
-}
-
-export default Categories;
+};

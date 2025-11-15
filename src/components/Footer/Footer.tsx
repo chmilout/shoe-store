@@ -1,6 +1,7 @@
+import { type FC } from 'react';
 import { Link } from 'react-router';
 
-function Footer() {
+export const Footer: FC = () => {
   return (
     <footer className="container bg-light footer">
       <div className="row">
@@ -71,6 +72,4 @@ function Footer() {
       </div>
     </footer>
   );
-}
-
-export default Footer;
+};

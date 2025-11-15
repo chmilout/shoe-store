@@ -1,15 +1,15 @@
-import { useEffect } from 'react';
+import { type FC, useEffect } from 'react';
 import { useSearchParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   setSearchQuery,
   selectSearchQuery,
 } from '../../store/catalogSlice';
-import Categories from '../../components/Categories/Categories';
-import CatalogItems from '../../components/CatalogItems/CatalogItems';
-import CatalogSearch from '../../components/CatalogSearch/CatalogSearch';
+import { Categories } from '../../components/Categories';
+import { CatalogItems } from '../../components/CatalogItems';
+import { CatalogSearch } from '../../components/CatalogSearch';
 
-function Catalog() {
+export const Catalog: FC = () => {
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const searchQuery = useSelector(selectSearchQuery);
@@ -61,6 +61,4 @@ function Catalog() {
       </div>
     </main>
   );
-}
-
-export default Catalog;
+};

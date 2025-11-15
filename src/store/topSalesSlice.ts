@@ -56,5 +56,5 @@ export const selectTopSalesLoading = (state: { topSales: TopSalesState }) =>
 export const selectTopSalesError = (state: { topSales: TopSalesState }) =>
   state.topSales.error;
 
-export default topSalesSlice.reducer;
+export const topSalesReducer = topSalesSlice.reducer;
 

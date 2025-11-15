@@ -1,12 +1,12 @@
-import type { ReactNode } from 'react';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
+import { type FC, type ReactNode } from 'react';
+import { Header } from '../Header';
+import { Footer } from '../Footer';
 
 interface LayoutProps {
   children: ReactNode;
 }
 
-function Layout({ children }: LayoutProps) {
+export const Layout: FC<LayoutProps> = ({ children }) => {
   return (
     <>
       <Header />
@@ -14,7 +14,5 @@ function Layout({ children }: LayoutProps) {
       <Footer />
     </>
   );
-}
-
-export default Layout;
+};
 
