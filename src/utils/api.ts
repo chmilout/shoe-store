@@ -19,6 +19,28 @@ export interface CatalogItem {
   images: string[];
 }
 
+export interface ProductSize {
+  size: string;
+  available: boolean;
+}
+
+export interface ProductItem {
+  id: number;
+  category: number;
+  title: string;
+  images: string[];
+  sku: string;
+  manufacturer: string;
+  color: string;
+  material: string;
+  reason: string;
+  season: string;
+  heelSize?: string;
+  price: number;
+  oldPrice?: number;
+  sizes: ProductSize[];
+}
+
 export async function fetchTopSales(): Promise<TopSaleItem[]> {
   const response = await fetch(`${API_URL}/api/top-sales`);
   if (!response.ok) {
@@ -59,6 +81,17 @@ export async function fetchItems(params?: {
 
   if (!response.ok) {
     throw new Error('Failed to fetch items');
+  }
+  return response.json();
+}
+
+export async function fetchItem(id: number): Promise<ProductItem> {
+  const response = await fetch(`${API_URL}/api/items/${id}`);
+  if (!response.ok) {
+    if (response.status === 404) {
+      throw new Error('Товар не найден');
+    }
+    throw new Error('Failed to fetch item');
   }
   return response.json();
 }
