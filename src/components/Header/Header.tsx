@@ -1,26 +1,34 @@
-import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectCartItemsCount } from '../../store/cartSlice';
+import {
+  selectIsSearchOpen,
+  selectIsMenuOpen,
+  selectHeaderSearchQuery,
+  toggleSearch,
+  closeSearch,
+  setHeaderSearchQuery,
+  clearHeaderSearchQuery,
+  toggleMenu,
+} from '../../store/uiSlice';
 import './Header.css';
 
 function Header() {
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const cartItemsCount = useSelector(selectCartItemsCount);
+  const isSearchOpen = useSelector(selectIsSearchOpen);
+  const isMenuOpen = useSelector(selectIsMenuOpen);
+  const searchQuery = useSelector(selectHeaderSearchQuery);
 
   const handleSearchClick = () => {
     if (isSearchOpen && searchQuery.trim()) {
-      // Если поиск открыт и есть текст, перенаправляем на каталог
       navigate(`/catalog?q=${encodeURIComponent(searchQuery)}`);
-      setIsSearchOpen(false);
-      setSearchQuery('');
+      dispatch(closeSearch());
+      dispatch(clearHeaderSearchQuery());
     } else {
-      // Иначе просто открываем/закрываем поиск
-      setIsSearchOpen(!isSearchOpen);
+      dispatch(toggleSearch());
     }
   };
 
@@ -28,10 +36,10 @@ function Header() {
     e.preventDefault();
     if (searchQuery.trim()) {
       navigate(`/catalog?q=${encodeURIComponent(searchQuery)}`);
-      setIsSearchOpen(false);
-      setSearchQuery('');
+      dispatch(closeSearch());
+      dispatch(clearHeaderSearchQuery());
     } else {
-      setIsSearchOpen(false);
+      dispatch(closeSearch());
     }
   };
 
@@ -50,7 +58,7 @@ function Header() {
             <button
               className="navbar-toggler"
               type="button"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              onClick={() => dispatch(toggleMenu())}
               aria-controls="navbarMain"
               aria-expanded={isMenuOpen}
               aria-label="Toggle navigation"
@@ -121,10 +129,10 @@ function Header() {
                     className="form-control"
                     placeholder="Поиск"
                     value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onChange={(e) => dispatch(setHeaderSearchQuery(e.target.value))}
                     onBlur={() => {
                       if (!searchQuery.trim()) {
-                        setIsSearchOpen(false);
+                        dispatch(closeSearch());
                       }
                     }}
                     autoFocus={isSearchOpen}

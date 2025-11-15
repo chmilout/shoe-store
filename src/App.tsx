@@ -7,7 +7,6 @@ import Contacts from './pages/Contacts/Contacts';
 import Product from './pages/Product/Product';
 import Cart from './pages/Cart/Cart';
 import NotFound from './pages/NotFound/NotFound';
-import './App.css';
 
 function App() {
   return (

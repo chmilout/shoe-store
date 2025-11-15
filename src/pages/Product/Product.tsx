@@ -1,61 +1,56 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router';
-import { useDispatch } from 'react-redux';
-import { fetchItem, type ProductItem } from '../../utils/api';
+import { useDispatch, useSelector } from 'react-redux';
+import type { AppDispatch } from '../../store';
+import {
+  fetchProductThunk,
+  selectProduct,
+  selectProductLoading,
+  selectProductError,
+  selectSelectedSize,
+  selectQuantity,
+  setSelectedSize,
+  incrementQuantity,
+  decrementQuantity,
+  resetProduct,
+} from '../../store/productSlice';
 import { addToCart } from '../../store/cartSlice';
 import Loader from '../../components/Loader/Loader';
-import './Product.css';
 
 function Product() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [product, setProduct] = useState<ProductItem | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [selectedSize, setSelectedSize] = useState<string | null>(null);
-  const [quantity, setQuantity] = useState(1);
+  const dispatch = useDispatch<AppDispatch>();
+  const product = useSelector(selectProduct);
+  const loading = useSelector(selectProductLoading);
+  const error = useSelector(selectProductError);
+  const selectedSize = useSelector(selectSelectedSize);
+  const quantity = useSelector(selectQuantity);
 
   useEffect(() => {
-    const loadProduct = async () => {
-      if (!id) {
-        setError('ID товара не указан');
-        setLoading(false);
-        return;
-      }
-
-      try {
-        setLoading(true);
-        setError(null);
-        const data = await fetchItem(Number(id));
-        setProduct(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Ошибка загрузки товара');
-      } finally {
-        setLoading(false);
-      }
+    if (id) {
+      dispatch(fetchProductThunk(Number(id)));
+    }
+    return () => {
+      dispatch(resetProduct());
     };
-
-    loadProduct();
-  }, [id]);
+  }, [dispatch, id]);
 
   const handleSizeClick = (size: string) => {
-    setSelectedSize(size);
+    dispatch(setSelectedSize(size));
   };
 
   const handleQuantityChange = (delta: number) => {
-    setQuantity((prev) => {
-      const newQuantity = prev + delta;
-      if (newQuantity < 1) return 1;
-      if (newQuantity > 10) return 10;
-      return newQuantity;
-    });
+    if (delta > 0) {
+      dispatch(incrementQuantity());
+    } else {
+      dispatch(decrementQuantity());
+    }
   };
 
   const handleAddToCart = () => {
     if (!product || !selectedSize) return;
 
-    // Добавляем товар в корзину с указанным количеством
     dispatch(
       addToCart({
         id: product.id,
@@ -67,7 +62,6 @@ function Product() {
       })
     );
 
-    // Переходим на страницу корзины
     navigate('/cart');
   };
 

@@ -1,68 +1,55 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router';
-import { fetchItems, type CatalogItem } from '../../utils/api';
+import { useDispatch, useSelector } from 'react-redux';
+import type { AppDispatch } from '../../store';
+import {
+  fetchItemsThunk,
+  selectCatalogItems,
+  selectCatalogItemsLoading,
+  selectCatalogItemsLoadingMore,
+  selectCatalogError,
+  selectHasMore,
+  resetItems,
+} from '../../store/catalogSlice';
 import Loader from '../Loader/Loader';
-import './CatalogItems.css';
 
-interface CatalogItemsProps {
-  categoryId: number | null;
-  searchQuery?: string;
-}
-
-const ITEMS_PER_PAGE = 6;
-
-function CatalogItems({ categoryId, searchQuery }: CatalogItemsProps) {
-  const [items, setItems] = useState<CatalogItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [loadingMore, setLoadingMore] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [offset, setOffset] = useState(0);
-  const [hasMore, setHasMore] = useState(true);
+function CatalogItems() {
+  const dispatch = useDispatch<AppDispatch>();
+  const items = useSelector(selectCatalogItems);
+  const loading = useSelector(selectCatalogItemsLoading);
+  const loadingMore = useSelector(selectCatalogItemsLoadingMore);
+  const error = useSelector(selectCatalogError);
+  const hasMore = useSelector(selectHasMore);
+  const selectedCategoryId = useSelector(
+    (state: { catalog: { selectedCategoryId: number | null } }) =>
+      state.catalog.selectedCategoryId
+  );
+  const searchQuery = useSelector(
+    (state: { catalog: { searchQuery: string } }) => state.catalog.searchQuery
+  );
 
   useEffect(() => {
-    const loadItems = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        setOffset(0);
-        const data = await fetchItems({
-          categoryId: categoryId || undefined,
-          offset: 0,
-          q: searchQuery || undefined,
-        });
-        setItems(data);
-        setHasMore(data.length === ITEMS_PER_PAGE);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Ошибка загрузки');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadItems();
-  }, [categoryId, searchQuery]);
-
-  const handleLoadMore = async () => {
-    const newOffset = offset + ITEMS_PER_PAGE;
-    try {
-      setLoadingMore(true);
-      const data = await fetchItems({
-        categoryId: categoryId || undefined,
-        offset: newOffset,
+    dispatch(resetItems());
+    dispatch(
+      fetchItemsThunk({
+        categoryId: selectedCategoryId || undefined,
+        offset: 0,
         q: searchQuery || undefined,
-      });
+        append: false,
+      })
+    );
+  }, [dispatch, selectedCategoryId, searchQuery]);
 
-      if (data.length === 0 || data.length < ITEMS_PER_PAGE) {
-        setHasMore(false);
-      }
-
-      setItems((prev) => [...prev, ...data]);
-      setOffset(newOffset);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Ошибка загрузки');
-    } finally {
-      setLoadingMore(false);
-    }
+  const handleLoadMore = () => {
+    const currentOffset = items.length;
+    dispatch(
+      fetchItemsThunk({
+        categoryId: selectedCategoryId || undefined,
+        offset: currentOffset,
+        q: searchQuery || undefined,
+        append: true,
+      })
+    );
   };
 
   if (loading) {

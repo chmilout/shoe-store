@@ -1,13 +1,8 @@
-import { useState } from 'react';
 import TopSales from '../../components/TopSales/TopSales';
 import Categories from '../../components/Categories/Categories';
 import CatalogItems from '../../components/CatalogItems/CatalogItems';
 
 function Home() {
-  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
-    null
-  );
-
   return (
     <main className="container">
       <div className="row">
@@ -22,11 +17,8 @@ function Home() {
           </div>
           <TopSales />
           <section className="catalog">
-            <Categories
-              selectedCategoryId={selectedCategoryId}
-              onCategoryChange={setSelectedCategoryId}
-            />
-            <CatalogItems categoryId={selectedCategoryId} />
+            <Categories />
+            <CatalogItems />
           </section>
         </div>
       </div>
@@ -35,4 +27,3 @@ function Home() {
 }
 
 export default Home;
-

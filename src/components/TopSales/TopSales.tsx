@@ -1,30 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router';
-import { fetchTopSales, type TopSaleItem } from '../../utils/api';
+import { useDispatch, useSelector } from 'react-redux';
+import type { AppDispatch } from '../../store';
+import {
+  fetchTopSalesThunk,
+  selectTopSalesItems,
+  selectTopSalesLoading,
+  selectTopSalesError,
+} from '../../store/topSalesSlice';
 import Loader from '../Loader/Loader';
-import './TopSales.css';
 
 function TopSales() {
-  const [items, setItems] = useState<TopSaleItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const dispatch = useDispatch<AppDispatch>();
+  const items = useSelector(selectTopSalesItems);
+  const loading = useSelector(selectTopSalesLoading);
+  const error = useSelector(selectTopSalesError);
 
   useEffect(() => {
-    const loadTopSales = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const data = await fetchTopSales();
-        setItems(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Ошибка загрузки');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadTopSales();
-  }, []);
+    dispatch(fetchTopSalesThunk());
+  }, [dispatch]);
 
   if (loading) {
     return (
@@ -44,7 +38,6 @@ function TopSales() {
     );
   }
 
-  // Если нет хитов продаж, не отображаем компонент
   if (items.length === 0) {
     return null;
   }
@@ -82,4 +75,3 @@ function TopSales() {
 }
 
 export default TopSales;
-
