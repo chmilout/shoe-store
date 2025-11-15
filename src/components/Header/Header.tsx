@@ -99,7 +99,7 @@ function Header() {
                   </Link>
                 </li>
               </ul>
-              <div className="d-flex align-items-center">
+              <div className="d-flex align-items-center header-controls-wrapper">
                 <div className="header-controls-pics">
                   <div
                     data-id="search-expander"
@@ -129,7 +129,9 @@ function Header() {
                     className="form-control"
                     placeholder="Поиск"
                     value={searchQuery}
-                    onChange={(e) => dispatch(setHeaderSearchQuery(e.target.value))}
+                    onChange={(e) =>
+                      dispatch(setHeaderSearchQuery(e.target.value))
+                    }
                     onBlur={() => {
                       if (!searchQuery.trim()) {
                         dispatch(closeSearch());
