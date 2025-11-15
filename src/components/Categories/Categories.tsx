@@ -1,37 +1,37 @@
-import { useEffect, useState } from 'react';
-import { fetchCategories, type Category } from '../../utils/api';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import type { AppDispatch } from '../../store';
+import {
+  fetchCategoriesThunk,
+  selectCategories,
+  selectCategoriesLoading,
+  setSelectedCategoryId,
+  selectSelectedCategoryId,
+} from '../../store/catalogSlice';
 
 interface CategoriesProps {
-  selectedCategoryId: number | null;
-  onCategoryChange: (categoryId: number | null) => void;
+  onCategoryChange?: (categoryId: number | null) => void;
 }
 
-function Categories({ selectedCategoryId, onCategoryChange }: CategoriesProps) {
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [loading, setLoading] = useState(true);
+function Categories({ onCategoryChange }: CategoriesProps) {
+  const dispatch = useDispatch<AppDispatch>();
+  const categories = useSelector(selectCategories);
+  const loading = useSelector(selectCategoriesLoading);
+  const selectedCategoryId = useSelector(selectSelectedCategoryId);
 
   useEffect(() => {
-    const loadCategories = async () => {
-      try {
-        setLoading(true);
-        const data = await fetchCategories();
-        setCategories(data);
-      } catch (err) {
-        console.error('Failed to load categories:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadCategories();
-  }, []);
+    dispatch(fetchCategoriesThunk());
+  }, [dispatch]);
 
   if (loading) {
     return null;
   }
 
   const handleCategoryClick = (categoryId: number | null) => {
-    onCategoryChange(categoryId);
+    dispatch(setSelectedCategoryId(categoryId));
+    if (onCategoryChange) {
+      onCategoryChange(categoryId);
+    }
   };
 
   return (
@@ -69,4 +69,3 @@ function Categories({ selectedCategoryId, onCategoryChange }: CategoriesProps) {
 }
 
 export default Categories;
-

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router';
+import type { AppDispatch } from '../../store';
 import {
   selectCartItems,
   selectCartTotal,
@@ -16,7 +17,7 @@ import Loader from '../../components/Loader/Loader';
 import './Cart.css';
 
 function Cart() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const cartItems = useSelector(selectCartItems);
   const cartTotal = useSelector(selectCartTotal);
   const loading = useSelector(selectCartLoading);
@@ -208,8 +209,11 @@ function Cart() {
                 </table>
 
                 <div className="cart-items-mobile">
-                  {cartItems.map((item, index) => (
-                    <div key={`${item.id}-${item.size}`} className="cart-item-card">
+                  {cartItems.map((item) => (
+                    <div
+                      key={`${item.id}-${item.size}`}
+                      className="cart-item-card"
+                    >
                       <div className="cart-item-header">
                         <h5 className="cart-item-title">
                           <Link to={`/catalog/${item.id}`}>{item.title}</Link>
@@ -226,17 +230,23 @@ function Cart() {
                       <div className="cart-item-details">
                         <div className="cart-item-detail">
                           <span className="cart-item-detail-label">Размер</span>
-                          <span className="cart-item-detail-value">{item.size}</span>
+                          <span className="cart-item-detail-value">
+                            {item.size}
+                          </span>
                         </div>
                         <div className="cart-item-detail">
-                          <span className="cart-item-detail-label">Цена за шт.</span>
+                          <span className="cart-item-detail-label">
+                            Цена за шт.
+                          </span>
                           <span className="cart-item-detail-value">
                             {formatPrice(item.price)} руб.
                           </span>
                         </div>
                       </div>
                       <div className="cart-item-quantity">
-                        <span className="cart-item-detail-label">Количество:</span>
+                        <span className="cart-item-detail-label">
+                          Количество:
+                        </span>
                         <div className="btn-group btn-group-sm">
                           <button
                             className="btn btn-secondary"
@@ -272,7 +282,9 @@ function Cart() {
                     </div>
                   ))}
                   <div className="cart-total-mobile">
-                    <span className="cart-total-mobile-label">Общая стоимость:</span>
+                    <span className="cart-total-mobile-label">
+                      Общая стоимость:
+                    </span>
                     <span className="cart-total-mobile-value">
                       {formatPrice(cartTotal)} руб.
                     </span>
@@ -285,12 +297,17 @@ function Cart() {
           {cartItems.length > 0 && (
             <section className="order">
               <h2 className="text-center">Оформить заказ</h2>
-              <div className="card" style={{ maxWidth: '30rem', margin: '0 auto' }}>
+              <div
+                className="card"
+                style={{ maxWidth: '30rem', margin: '0 auto' }}
+              >
                 <form className="card-body" onSubmit={handleSubmit}>
                   <div className="form-group">
                     <label htmlFor="phone">Телефон</label>
                     <input
-                      className={`form-control ${formErrors.phone ? 'is-invalid' : ''}`}
+                      className={`form-control ${
+                        formErrors.phone ? 'is-invalid' : ''
+                      }`}
                       id="phone"
                       placeholder="+7xxxxxxxxxx"
                       value={phone}
@@ -304,7 +321,9 @@ function Cart() {
                   <div className="form-group">
                     <label htmlFor="address">Адрес доставки</label>
                     <input
-                      className={`form-control ${formErrors.address ? 'is-invalid' : ''}`}
+                      className={`form-control ${
+                        formErrors.address ? 'is-invalid' : ''
+                      }`}
                       id="address"
                       placeholder="Адрес доставки"
                       value={address}
@@ -312,13 +331,17 @@ function Cart() {
                       disabled={loading}
                     />
                     {formErrors.address && (
-                      <div className="invalid-feedback">{formErrors.address}</div>
+                      <div className="invalid-feedback">
+                        {formErrors.address}
+                      </div>
                     )}
                   </div>
                   <div className="form-group form-check">
                     <input
                       type="checkbox"
-                      className={`form-check-input ${formErrors.agreement ? 'is-invalid' : ''}`}
+                      className={`form-check-input ${
+                        formErrors.agreement ? 'is-invalid' : ''
+                      }`}
                       id="agreement"
                       checked={agreement}
                       onChange={(e) => setAgreement(e.target.checked)}

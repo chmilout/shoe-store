@@ -1,25 +1,27 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSearchParams } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  setSearchQuery,
+  selectSearchQuery,
+} from '../../store/catalogSlice';
 import Categories from '../../components/Categories/Categories';
 import CatalogItems from '../../components/CatalogItems/CatalogItems';
 import CatalogSearch from '../../components/CatalogSearch/CatalogSearch';
 
 function Catalog() {
+  const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
-    null
-  );
+  const searchQuery = useSelector(selectSearchQuery);
 
   const searchQueryFromUrl = searchParams.get('q') || '';
 
-  const [searchQuery, setSearchQuery] = useState(searchQueryFromUrl);
-
   useEffect(() => {
-    setSearchQuery(searchQueryFromUrl);
-  }, [searchParams.toString()]);
+    dispatch(setSearchQuery(searchQueryFromUrl));
+  }, [dispatch, searchQueryFromUrl]);
 
   const handleSearchChange = (query: string) => {
-    setSearchQuery(query);
+    dispatch(setSearchQuery(query));
   };
 
   const handleSearchSubmit = (query: string) => {
@@ -30,11 +32,7 @@ function Catalog() {
       newParams.delete('q');
     }
     setSearchParams(newParams);
-    setSearchQuery(query.trim());
-  };
-
-  const handleCategoryChange = (categoryId: number | null) => {
-    setSelectedCategoryId(categoryId);
+    dispatch(setSearchQuery(query.trim()));
   };
 
   return (
@@ -56,14 +54,8 @@ function Catalog() {
               onSearchChange={handleSearchChange}
               onSearchSubmit={handleSearchSubmit}
             />
-            <Categories
-              selectedCategoryId={selectedCategoryId}
-              onCategoryChange={handleCategoryChange}
-            />
-            <CatalogItems
-              categoryId={selectedCategoryId}
-              searchQuery={searchQueryFromUrl.trim() || undefined}
-            />
+            <Categories />
+            <CatalogItems />
           </section>
         </div>
       </div>
