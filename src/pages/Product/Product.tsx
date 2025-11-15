@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
+import { useDispatch } from 'react-redux';
 import { fetchItem, type ProductItem } from '../../utils/api';
+import { addToCart } from '../../store/cartSlice';
 import Loader from '../../components/Loader/Loader';
 import './Product.css';
 
 function Product() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [product, setProduct] = useState<ProductItem | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -52,8 +55,19 @@ function Product() {
   const handleAddToCart = () => {
     if (!product || !selectedSize) return;
 
-    // TODO: Добавить товар в корзину (будет реализовано позже)
-    // Пока просто переходим на страницу корзины
+    // Добавляем товар в корзину с указанным количеством
+    dispatch(
+      addToCart({
+        id: product.id,
+        title: product.title,
+        price: product.price,
+        size: selectedSize,
+        image: product.images[0] || '/img/products/placeholder.jpg',
+        count: quantity,
+      })
+    );
+
+    // Переходим на страницу корзины
     navigate('/cart');
   };
 

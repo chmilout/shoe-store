@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router';
+import { useSelector } from 'react-redux';
+import { selectCartItemsCount } from '../../store/cartSlice';
 import './Header.css';
 
 function Header() {
@@ -8,6 +10,7 @@ function Header() {
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
+  const cartItemsCount = useSelector(selectCartItemsCount);
 
   const handleSearchClick = () => {
     if (isSearchOpen && searchQuery.trim()) {
@@ -99,7 +102,11 @@ function Header() {
                     to="/cart"
                     className="header-controls-pic header-controls-cart"
                   >
-                    <div className="header-controls-cart-full"></div>
+                    {cartItemsCount > 0 && (
+                      <div className="header-controls-cart-full">
+                        {cartItemsCount}
+                      </div>
+                    )}
                     <div className="header-controls-cart-menu"></div>
                   </Link>
                 </div>

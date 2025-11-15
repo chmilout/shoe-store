@@ -55,7 +55,7 @@ function TopSales() {
       <div className="row">
         {items.map((item) => (
           <div key={item.id} className="col-12 col-md-6 col-lg-4 mb-4">
-            <div className="card catalog-item-card h-100">
+            <div className="card catalog-item-card">
               <img
                 src={item.images[0] || '/img/products/placeholder.jpg'}
                 className="card-img-top img-fluid"
