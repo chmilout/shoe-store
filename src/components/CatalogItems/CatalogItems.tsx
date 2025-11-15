@@ -6,11 +6,12 @@ import './CatalogItems.css';
 
 interface CatalogItemsProps {
   categoryId: number | null;
+  searchQuery?: string;
 }
 
 const ITEMS_PER_PAGE = 6;
 
-function CatalogItems({ categoryId }: CatalogItemsProps) {
+function CatalogItems({ categoryId, searchQuery }: CatalogItemsProps) {
   const [items, setItems] = useState<CatalogItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -27,6 +28,7 @@ function CatalogItems({ categoryId }: CatalogItemsProps) {
         const data = await fetchItems({
           categoryId: categoryId || undefined,
           offset: 0,
+          q: searchQuery || undefined,
         });
         setItems(data);
         setHasMore(data.length === ITEMS_PER_PAGE);
@@ -38,7 +40,7 @@ function CatalogItems({ categoryId }: CatalogItemsProps) {
     };
 
     loadItems();
-  }, [categoryId]);
+  }, [categoryId, searchQuery]);
 
   const handleLoadMore = async () => {
     const newOffset = offset + ITEMS_PER_PAGE;
@@ -47,6 +49,7 @@ function CatalogItems({ categoryId }: CatalogItemsProps) {
       const data = await fetchItems({
         categoryId: categoryId || undefined,
         offset: newOffset,
+        q: searchQuery || undefined,
       });
 
       if (data.length === 0 || data.length < ITEMS_PER_PAGE) {
@@ -63,55 +66,48 @@ function CatalogItems({ categoryId }: CatalogItemsProps) {
   };
 
   if (loading) {
-    return (
-      <section className="catalog">
-        <h2 className="text-center">Каталог</h2>
-        <Loader />
-      </section>
-    );
+    return <Loader />;
   }
 
   if (error) {
-    return (
-      <section className="catalog">
-        <h2 className="text-center">Каталог</h2>
-        <p className="text-center text-danger">Ошибка: {error}</p>
-      </section>
-    );
+    return <p className="text-center text-danger">Ошибка: {error}</p>;
   }
 
   return (
-    <section className="catalog">
-      <h2 className="text-center">Каталог</h2>
-      <div className="row">
-        {items.map((item) => (
-          <div
-            key={item.id}
-            className="col-12 col-md-6 col-lg-4 catalog-item-card mb-4"
-          >
-            <div className="card h-100">
-              <img
-                src={item.images[0] || '/img/products/placeholder.jpg'}
-                className="card-img-top img-fluid"
-                alt={item.title}
-              />
-              <div className="card-body">
-                <p className="card-text">{item.title}</p>
-                <p className="card-text">
-                  {item.price.toLocaleString('ru-RU')} руб.
-                </p>
-                <Link
-                  to={`/catalog/${item.id}`}
-                  className="btn btn-outline-primary"
-                >
-                  Заказать
-                </Link>
+    <>
+      {items.length === 0 ? (
+        <p className="text-center">Товары не найдены</p>
+      ) : (
+        <div className="row">
+          {items.map((item) => (
+            <div
+              key={item.id}
+              className="col-12 col-md-6 col-lg-4 catalog-item-card mb-4"
+            >
+              <div className="card h-100">
+                <img
+                  src={item.images[0] || '/img/products/placeholder.jpg'}
+                  className="card-img-top img-fluid"
+                  alt={item.title}
+                />
+                <div className="card-body">
+                  <p className="card-text">{item.title}</p>
+                  <p className="card-text">
+                    {item.price.toLocaleString('ru-RU')} руб.
+                  </p>
+                  <Link
+                    to={`/catalog/${item.id}`}
+                    className="btn btn-outline-primary"
+                  >
+                    Заказать
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
-      {hasMore && (
+          ))}
+        </div>
+      )}
+      {hasMore && items.length > 0 && (
         <div className="text-center mt-4">
           {loadingMore && <Loader />}
           <button
@@ -123,7 +119,7 @@ function CatalogItems({ categoryId }: CatalogItemsProps) {
           </button>
         </div>
       )}
-    </section>
+    </>
   );
 }
 
