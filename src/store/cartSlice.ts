@@ -175,4 +175,4 @@ export const selectCartError = (state: { cart: CartState }) => state.cart.error;
 export const selectOrderSuccess = (state: { cart: CartState }) =>
   state.cart.orderSuccess;
 
-export default cartSlice.reducer;
+export const cartReducer = cartSlice.reducer;

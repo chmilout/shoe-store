@@ -1,4 +1,6 @@
-function Contacts() {
+import { type FC } from 'react';
+
+export const Contacts: FC = () => {
   return (
     <main className="container">
       <div className="row">
@@ -26,7 +28,5 @@ function Contacts() {
       </div>
     </main>
   );
-}
-
-export default Contacts;
+};
 

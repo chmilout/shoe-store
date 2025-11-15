@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { type FC, useEffect } from 'react';
 import { Link } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch } from '../../store';
@@ -8,9 +8,9 @@ import {
   selectTopSalesLoading,
   selectTopSalesError,
 } from '../../store/topSalesSlice';
-import Loader from '../Loader/Loader';
+import { Loader } from '../Loader';
 
-function TopSales() {
+export const TopSales: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const items = useSelector(selectTopSalesItems);
   const loading = useSelector(selectTopSalesLoading);
@@ -72,6 +72,4 @@ function TopSales() {
       </div>
     </section>
   );
-}
-
-export default TopSales;
+};

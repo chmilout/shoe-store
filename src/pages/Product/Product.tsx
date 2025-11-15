@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { type FC, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch } from '../../store';
@@ -15,9 +15,9 @@ import {
   resetProduct,
 } from '../../store/productSlice';
 import { addToCart } from '../../store/cartSlice';
-import Loader from '../../components/Loader/Loader';
+import { Loader } from '../../components/Loader';
 
-function Product() {
+export const Product: FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
@@ -222,6 +222,4 @@ function Product() {
       </div>
     </main>
   );
-}
-
-export default Product;
+};

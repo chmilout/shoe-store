@@ -1,14 +1,16 @@
+import { type FC } from 'react';
+
 interface CatalogSearchProps {
   searchQuery: string;
   onSearchChange: (query: string) => void;
   onSearchSubmit: (query: string) => void;
 }
 
-function CatalogSearch({
+export const CatalogSearch: FC<CatalogSearchProps> = ({
   searchQuery,
   onSearchChange,
   onSearchSubmit,
-}: CatalogSearchProps) {
+}) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSearchSubmit(searchQuery);
@@ -25,6 +27,4 @@ function CatalogSearch({
       />
     </form>
   );
-}
-
-export default CatalogSearch;
+};

@@ -100,5 +100,5 @@ export const selectSelectedSize = (state: { product: ProductState }) =>
 export const selectQuantity = (state: { product: ProductState }) =>
   state.product.quantity;
 
-export default productSlice.reducer;
+export const productReducer = productSlice.reducer;
 

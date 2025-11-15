@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import cartReducer from './cartSlice';
-import topSalesReducer from './topSalesSlice';
-import catalogReducer from './catalogSlice';
-import productReducer from './productSlice';
-import uiReducer from './uiSlice';
+import { cartReducer } from './cartSlice';
+import { topSalesReducer } from './topSalesSlice';
+import { catalogReducer } from './catalogSlice';
+import { productReducer } from './productSlice';
+import { uiReducer } from './uiSlice';
 
 export const store = configureStore({
   reducer: {

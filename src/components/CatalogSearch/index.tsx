@@ -1,0 +1,2 @@
+export { CatalogSearch } from './CatalogSearch';
+

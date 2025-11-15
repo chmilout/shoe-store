@@ -1,3 +1,4 @@
+import { type FC } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCartItemsCount } from '../../store/cartSlice';
@@ -13,7 +14,7 @@ import {
 } from '../../store/uiSlice';
 import './Header.css';
 
-function Header() {
+export const Header: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -147,6 +148,4 @@ function Header() {
       </div>
     </header>
   );
-}
-
-export default Header;
+};

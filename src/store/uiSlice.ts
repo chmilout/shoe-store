@@ -52,5 +52,5 @@ export const selectIsMenuOpen = (state: { ui: UiState }) => state.ui.isMenuOpen;
 export const selectHeaderSearchQuery = (state: { ui: UiState }) =>
   state.ui.headerSearchQuery;
 
-export default uiSlice.reducer;
+export const uiReducer = uiSlice.reducer;
 

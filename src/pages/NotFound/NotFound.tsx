@@ -1,4 +1,6 @@
-function NotFound() {
+import { type FC } from 'react';
+
+export const NotFound: FC = () => {
   return (
     <main className="container">
       <div className="row">
@@ -15,7 +17,5 @@ function NotFound() {
       </div>
     </main>
   );
-}
-
-export default NotFound;
+};
 

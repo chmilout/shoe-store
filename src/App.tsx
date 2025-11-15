@@ -1,14 +1,15 @@
+import { type FC } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router';
-import Layout from './components/Layout/Layout';
-import Home from './pages/Home/Home';
-import Catalog from './pages/Catalog/Catalog';
-import About from './pages/About/About';
-import Contacts from './pages/Contacts/Contacts';
-import Product from './pages/Product/Product';
-import Cart from './pages/Cart/Cart';
-import NotFound from './pages/NotFound/NotFound';
+import { Layout } from './components/Layout';
+import { Home } from './pages/Home';
+import { Catalog } from './pages/Catalog';
+import { About } from './pages/About';
+import { Contacts } from './pages/Contacts';
+import { Product } from './pages/Product';
+import { Cart } from './pages/Cart';
+import { NotFound } from './pages/NotFound';
 
-function App() {
+export const App: FC = () => {
   return (
     <BrowserRouter>
       <Layout>
@@ -24,6 +25,4 @@ function App() {
       </Layout>
     </BrowserRouter>
   );
-}
-
-export default App;
+};

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { type FC, useEffect } from 'react';
 import { Link } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch } from '../../store';
@@ -11,9 +11,9 @@ import {
   selectHasMore,
   resetItems,
 } from '../../store/catalogSlice';
-import Loader from '../Loader/Loader';
+import { Loader } from '../Loader';
 
-function CatalogItems() {
+export const CatalogItems: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const items = useSelector(selectCatalogItems);
   const loading = useSelector(selectCatalogItemsLoading);
@@ -108,6 +108,4 @@ function CatalogItems() {
       )}
     </>
   );
-}
-
-export default CatalogItems;
+};
